@@ -1,0 +1,6 @@
+region           = "us-east-1"
+trunks-vpc-range = "10.100.0.0/16"
+trunks-app1-cidr = "10.100.0.0/24"
+trunks-app2-cidr = "10.100.1.0/24"
+trunks-db1-cidr  = "10.100.2.0/24"
+trunks-db2-cidr  = "10.100.3.0/24"

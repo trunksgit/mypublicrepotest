@@ -1,0 +1,1 @@
+# No config only theory lec (just like previous lec no 15 same prac only diff is that here we use AWS cli )
