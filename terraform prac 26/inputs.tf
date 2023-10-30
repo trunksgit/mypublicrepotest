@@ -1,10 +1,10 @@
 variable "region" {
   type        = string
-  default     = "us-west-2"
+  default     = "us-east-1"
   description = "Region to create resources"
 }
 
-variable "ntier_vpc_info" {
+variable "trunks_vpc_info" {
   type = object({
     vpc_cidr        = string,
     subnet_azs      = list(string),

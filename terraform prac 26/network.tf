@@ -1,4 +1,4 @@
-resource "aws_vpc" "ntier" {
+resource "aws_vpc" "trunks" {
   cidr_block = var.ntier_vpc_info.vpc_cidr
   tags = {
     Name = "ntier"

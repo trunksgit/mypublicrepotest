@@ -3,7 +3,7 @@ resource "aws_security_group" "db" {
   ingress {
     from_port   = local.mysql_port
     to_port     = local.mysql_port
-    cidr_blocks = [var.ntier_vpc_info.vpc_cidr]
+    cidr_blocks = [var.trunks_vpc_info.vpc_cidr]
     protocol    = local.tcp
   }
   tags = {
@@ -17,7 +17,7 @@ resource "aws_security_group" "db" {
 data "aws_subnets" "db" {
   filter {
     name   = "tag:Name"
-    values = var.ntier_vpc_info.db_subnets
+    values = var.trunks_vpc_info.db_subnets
   }
   filter {
     name   = "vpc-id"
@@ -27,8 +27,8 @@ data "aws_subnets" "db" {
     aws_subnet.subnets
   ]
 }
-resource "aws_db_subnet_group" "ntier" {
-  name       = "ntier"
+resource "aws_db_subnet_group" "trunks" {
+  name       = "trunks"
   subnet_ids = data.aws_subnets.db.ids
   depends_on = [
     aws_subnet.subnets
@@ -39,7 +39,7 @@ resource "aws_db_subnet_group" "ntier" {
 resource "aws_db_instance" "empdb" {
   allocated_storage      = 20
   db_name                = "qtemployees"
-  db_subnet_group_name   = "ntier"
+  db_subnet_group_name   = "trunks"
   engine                 = "mysql"
   engine_version         = "8.0.28"
   instance_class         = "db.t2.micro"
@@ -50,7 +50,7 @@ resource "aws_db_instance" "empdb" {
   skip_final_snapshot    = true
 
   depends_on = [
-    aws_db_subnet_group.ntier,
+    aws_db_subnet_group.trunks,
     aws_security_group.db
   ]
 
